@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1Win Access</title>
+    <style>
+        /* Фон и стиль страницы */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://naffipase.com/wp-content/uploads/2024/04/Frame-38313-2048x943.webp');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        /* Стиль контейнера */
+        .game-container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        /* Логотип */
+        .logo {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        /* Стили текста */
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        /* Стили кнопки */
+        .button {
+            background-color: #9d0fff;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .button:hover {
+            background-color: #7b0ddb;
+        }
+
+        /* Стиль для сообщения об ошибке */
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Скрыть элементы по умолчанию */
+        .hidden {
+            display: none;
+        }
+
+        /* Контейнер для множителя и его анимации */
+        .multiplier-container {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            width: 150px;
+            height: 150px;
+        }
+
+        /* Вращающийся круг из полосок */
+        .multiplier-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px dashed rgba(0, 212, 255, 0.8);
+            animation: spin 15s linear infinite; /* Замедлено до 15 секунд */
+        }
+
+        /* Анимация вращения */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Стили для множителя */
+        .multiplier {
+            font-size: 3.5em;
+            color: #00ffcc;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .multiplier.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Стили для тех. поддержки */
+        .support {
+            margin-top: 20px;
+            color: white;
+        }
+
+        .support a {
+            color: #9d0fff;
+            text-decoration: none;
+        }
+
+        .support a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
+    <script>
+        // Настройки Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCBH3adMB558XFLlsLPmzRZSz2pkjz7lSQ",
+            authDomain: "testbota-23cb1.firebaseapp.com",
+            databaseURL: "https://testbota-23cb1-default-rtdb.firebaseio.com",
+            projectId: "testbota-23cb1",
+            storageBucket: "testbota-23cb1.appspot.com",
+            messagingSenderId: "1009808502725",
+            appId: "1:1009808502725:web:d2fd0e30aa3fbee05425ac",
+            measurementId: "G-XK0DBGYFW5"
+        };
+
+        // Инициализация Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let allowedIds = [];
+
+        // Загрузка ID из Firebase при инициализации
+        function loadIds() {
+            const idRef = database.ref('allowedIds');
+            idRef.on('value', (snapshot) => {
+                allowedIds = [];
+                snapshot.forEach((childSnapshot) => {
+                    allowedIds.push(childSnapshot.val());
+                });
+                updateIdList();
+            });
+        }
+
+        function checkAccess() {
+            const accountId = document.getElementById("accountId").value;
+            const errorMsg = document.getElementById("errorMsg");
+            const loadingElement = document.getElementById("loading");
+            const mainContainer = document.getElementById("mainContainer");
+
+            errorMsg.classList.add("hidden");
+            loadingElement.classList.remove("hidden");
+
+            setTimeout(() => {
+                if (allowedIds.includes(accountId)) {
+                    loadingElement.classList.add("hidden");
+                    mainContainer.innerHTML = `
+                        <a href="https://your-link-here.com" target="_blank">
+                            <img src="https://1winbd.com/wp-content/uploads/2022/10/lucky-jet-header.webp" alt="Логотип" class="logo" />
+                        </a>
+                        <h1>Lucky Jet Predictor</h1>
+                        <div class="loading hidden" id="loadingMultiplier">Подключение к игре...</div>
+                        <div class="multiplier-container">
+                            <div class="multiplier-circle"></div>
+                            <div class="multiplier hidden" id="multiplier"></div>
+                        </div>
+                        <button class="button" onclick="generateRandomMultiplier()">Получить сигнал</button>
+                    `;
+                } else {
+                    loadingElement.classList.add("hidden");
+                    errorMsg.textContent = "Доступ запрещён. ";
+                    errorMsg.innerHTML += '<a href="https://t.me/ваш_телеграм" style="color: #9d0fff;">Получить доступ</a>';
+                    errorMsg.classList.remove("hidden");
+                }
+            }, 2000);
+        }
+
+        function generateRandomMultiplier() {
+            const multiplierElement = document.getElementById("multiplier");
+            const loadingElement = document.getElementById("loadingMultiplier");
+
+            multiplierElement.classList.remove("show");
+            loadingElement.classList.remove("hidden");
+
+            setTimeout(() => {
+                const randomMultiplier = (Math.random() * 9 + 1).toFixed(2);
+                multiplierElement.textContent = `x${randomMultiplier}`;
+                loadingElement.classList.add("hidden");
+                multiplierElement.classList.add("show");
+                multiplierElement.classList.remove("hidden");
+            }, 2000);
+        }
+
+        function showAdminPanel() {
+            const mainContainer = document.getElementById("mainContainer");
+            mainContainer.innerHTML = `
+                <h1>Админ Панель</h1>
+                <input type="text" id="newId" placeholder="Введите новый ID" />
+                <button class="button" onclick="addId()">Добавить ID</button>
+                <h3>Существующие ID:</h3>
+                <ul id="idList"></ul>
+                <button class="button" onclick="showAccess()">Вернуться к доступу</button>
+            `;
+            updateIdList();
+        }
+
+        function addId() {
+            const newId = document.getElementById("newId").value;
+            if (newId && !allowedIds.includes(newId)) {
+                allowedIds.push(newId);
+                updateIdList();
+                document.getElementById("newId").value = ''; // Очистить поле ввода
+
+                // Сохранение нового ID в Firebase
+                const idRef = database.ref('allowedIds');
+                idRef.push(newId);
+            } else {
+                alert("ID уже существует или пустой.");
+            }
+        }
+
+        function updateIdList() {
+            const idList = document.getElementById("idList");
+            idList.innerHTML = '';
+            allowedIds.forEach(id => {
+                idList.innerHTML += `<li>${id} <button onclick="removeId('${id}')">Удалить</button></li>`;
+            });
+        }
+
+        function removeId(idToRemove) {
+            allowedIds = allowedIds.filter(id => id !== idToRemove);
+            updateIdList();
+
+            // Удаление ID из Firebase
+            const idRef = database.ref('allowedIds');
+            idRef.orderByValue().equalTo(idToRemove).once("value", snapshot => {
+                snapshot.forEach(childSnapshot => {
+                    childSnapshot.ref.remove();
+                });
+            });
+        }
+
+        function showAccess() {
+            const mainContainer = document.getElementById("mainContainer");
+            mainContainer.innerHTML = `
+                <a href="https://your-link-here.com" target="_blank">
+                    <img src="https://1winbd.com/wp-content/uploads/2022/10/lucky-jet-header.webp" alt="Логотип" class="logo" />
+                </a>
+                <h1>Доступ к Lucky Jet</h1>
+                <input type="text" id="accountId" placeholder="Введите ваш ID" />
+                <button class="button" onclick="checkAccess()">Проверить доступ</button>
+                <div class="error hidden" id="errorMsg"></div>
+                <div class="loading hidden" id="loading">Загрузка...</div>
+            `;
+        }
+
+        window.onload = function() {
+            showAccess(); // Показать форму доступа при загрузке
+            loadIds(); // Загрузить существующие ID
+        };
+    </script>
+</head>
+<body>
+    <div class="game-container" id="mainContainer">
+        <!-- Контент будет загружен здесь -->
+    </div>
+</body>
+</html>

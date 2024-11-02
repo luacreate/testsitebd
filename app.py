@@ -7,14 +7,20 @@ app = Flask(__name__)
 def home():
     return "Server is running!"
 
-@app.route('/postback', methods=['POST'])
-def postback():
-    data = request.json  # Получи данные из postback запроса
+@app.route('/postback:<int:id>:<action>', methods=['GET'])
+def postback(id, action):
+    # Здесь id будет целым числом, а action будет строкой (например, "REGISTRATION" или "DEPOSIT")
+    data = {
+        'id': id,
+        'action': action
+    }
+
     # Записываем данные в текстовый файл
-    with open('postbacks.txt', 'a') as f:  # Открываем файл в режиме добавления
-        f.write(str(data) + '\n')  # Записываем данные и переводим строку
-    return jsonify({'status': 'success'})
+    with open('postbacks.txt', 'a') as f:
+        f.write(f"ID: {id}, Action: {action}\n")
+    
+    return jsonify({'status': 'success', 'data': data})
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))  # Используем переменную окружения PORT
+    port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)

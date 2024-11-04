@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5x5 Поле с Квадратиками</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .floating-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { opacity: 0; transform: translateY(0); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-50vh); }
+        }
+
+        .game-container {
+            padding: 10px;
+            border: 5px solid rgba(0, 0, 255, 0.8);
+            border-radius: 15px;
+            background: #001F3F;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 50px);
+            grid-template-rows: repeat(5, 50px);
+            gap: 5px;
+            position: relative;
+        }
+
+        .square {
+            width: 50px;
+            height: 50px;
+            background-color: #007BFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            opacity: 1;
+        }
+
+        .star {
+            font-size: 40px;
+            color: darkorange;
+            position: absolute;
+            transition: opacity 0.5s, transform 0.5s;
+            opacity: 0;
+        }
+
+        .mode-selection {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            padding: 10px;
+            border: 2px solid rgba(0, 0, 255, 0.8);
+            border-radius: 8px;
+            background: #001F3F;
+            margin-bottom: 15px;
+        }
+
+        .mode-button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .mode-button:hover {
+            background-color: #0056b3;
+        }
+
+        #modeValue {
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: linear-gradient(to right, #FF7E5F, #FEB47B);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #FEB47B, #FF7E5F);
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: white;
+            font-size: 32px;
+            margin: 0; /* Удалён отступ */
+        }
+
+        .username {
+            color: white;
+            font-size: 16px;
+            margin: 0; /* Удалён отступ */
+            margin-top: -5px; /* Уменьшен отступ сверху для поднятия юзернейма */
+        }
+
+        .header {
+            text-align: center; /* Центрирование заголовка и юзернейма */
+            margin-bottom: 20px; /* Отступ снизу */
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: repeat(5, 40px);
+                grid-template-rows: repeat(5, 40px);
+            }
+
+            .square {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .star {
+                font-size: 32px;
+            }
+
+            button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Mines Hack</h1>
+    <h2 class="username">@mines_moments_bot</h2>
+</div>
+
+<div class="game-container">
+    <div class="grid" id="grid"></div>
+</div>
+
+<div class="mode-selection">
+    <button class="mode-button" id="decrement">-</button>
+    <div id="modeValue">1</div>
+    <button class="mode-button" id="increment">+</button>
+</div>
+
+<button id="signalButton">Получить сигнал</button>
+
+<script>
+    const grid = document.getElementById('grid');
+    const squares = [];
+    let currentStars = [];
+    let mode = 1;
+    const modeValueDisplay = document.getElementById('modeValue');
+
+    // Создание квадратов на поле
+    for (let i = 0; i < 25; i++) {
+        const square = document.createElement('div');
+        square.className = 'square';
+        grid.appendChild(square);
+        squares.push(square);
+    }
+
+    // Создание плавающих точек
+    for (let i = 0; i < 30; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'floating-dot';
+        dot.style.left = `${Math.random() * 100}vw`;
+        dot.style.top = `${Math.random() * 100}vh`;
+        document.body.appendChild(dot);
+    }
+
+    // Функция показа звезд по одной
+    async function showStars() {
+        currentStars.forEach(star => star.remove());
+        currentStars = [];
+        
+        squares.forEach(square => {
+            square.style.opacity = '1';
+            square.style.visibility = 'visible';
+        });
+
+        let starsToShow;
+        if (mode === 1) starsToShow = 10;
+        else if (mode === 3) starsToShow = 5;
+        else if (mode === 5) starsToShow = 4;
+        else if (mode === 7) starsToShow = 3;
+
+        const randomIndices = [];
+        while (randomIndices.length < starsToShow) {
+            const randomIndex = Math.floor(Math.random() * 25);
+            if (!randomIndices.includes(randomIndex)) randomIndices.push(randomIndex);
+        }
+
+        for (let i = 0; i < randomIndices.length; i++) {
+            const index = randomIndices[i];
+            const square = squares[index];
+            
+            square.style.transition = 'opacity 0.5s';
+            square.style.opacity = '0';
+
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.textContent = '⭐️';
+            star.style.left = `${square.offsetLeft + grid.offsetLeft}px`;
+            star.style.top = `${square.offsetTop + grid.offsetTop}px`;
+            star.style.opacity = '1';
+            document.body.appendChild(star);
+            currentStars.push(star);
+        }
+    }
+
+    document.getElementById('signalButton').addEventListener('click', showStars);
+
+    document.getElementById('increment').addEventListener('click', () => {
+        if (mode < 7) mode += 2;
+        modeValueDisplay.textContent = mode;
+    });
+
+    document.getElementById('decrement').addEventListener('click', () => {
+        if (mode > 1) mode -= 2;
+        modeValueDisplay.textContent = mode;
+    });
+</script>
+</body>
+</html>

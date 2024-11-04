@@ -197,6 +197,7 @@
     let currentStars = [];
     let mode = 1;
     const modeValueDisplay = document.getElementById('modeValue');
+    let isShowingSignal = false; // Переменная для отслеживания состояния
 
     // Создание квадратов на поле
     for (let i = 0; i < 25; i++) {
@@ -217,6 +218,9 @@
 
     // Функция показа звезд по одной
     async function showStars() {
+        if (isShowingSignal) return; // Если сигнал уже показывается, выходим из функции
+        isShowingSignal = true; // Устанавливаем флаг, что сигнал показывается
+
         currentStars.forEach(star => star.remove());
         currentStars = [];
         
@@ -255,6 +259,8 @@
             document.body.appendChild(star);
             currentStars.push(star);
         }
+
+        isShowingSignal = false; // Сбрасываем флаг, когда процесс завершен
     }
 
     document.getElementById('signalButton').addEventListener('click', showStars);
@@ -269,5 +275,6 @@
         modeValueDisplay.textContent = mode;
     });
 </script>
+
 </body>
 </html>

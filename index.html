@@ -204,13 +204,7 @@
 
 <div class="game-container">
     <div class="grid" id="grid">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250" width="250" height="250" style="display: none;">
-            <defs>
-                <g id="cell">
-                    <rect width="50" height="50" rx="8" ry="8" fill="#007BFF" />
-                </g>
-            </defs>
-        </svg>
+        
     </div>
 </div>
 
@@ -243,9 +237,9 @@
         // Определение позиции для каждого квадрата
         const row = Math.floor(i / 5);
         const col = i % 5;
-        square.style.backgroundPosition = `-${col * 50}px -${row * 50}px`;
+        
 
-        square.innerHTML = '';
+        
         grid.appendChild(square);
         squares.push(square);
     }

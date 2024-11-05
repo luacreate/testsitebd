@@ -42,8 +42,8 @@
         .square {
             width: 50px;
             height: 50px;
-            background: url('button.png') no-repeat center center; 
-            background-size: cover;
+            background: url('button.png') no-repeat center center; background-size: cover;
+            background-size: 250px 250px; /* Размер всего SVG-файла */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -117,7 +117,7 @@
             padding: 15px 40px;
             font-size: 20px;
             cursor: pointer;
-            background: #1976D2; /* Синий цвет кнопки */
+            background: #1976D2; /* Синий цвет кнопки */ /* Темный фон для кнопки */
             border: none;
             border-radius: 10px;
             color: #FFFFFF; /* Белый текст */
@@ -178,6 +178,21 @@
                 height: 32px;
             }
         }
+            .molniya-left {
+            position: absolute;
+            left: 0;
+            bottom: 50%;
+            width: 50px; /* Размер молнии */
+            z-index: -1; /* Чтобы изображение находилось позади интерфейса */
+        }
+
+        .molniya-right {
+            position: absolute;
+            right: 0;
+            top: 10px;
+            width: 50px; /* Размер молнии */
+            z-index: -1; /* Чтобы изображение находилось позади интерфейса */
+        }
     </style>
 </head>
 <body>
@@ -188,7 +203,15 @@
 </div>
 
 <div class="game-container">
-    <div class="grid" id="grid"></div>
+    <div class="grid" id="grid">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250" width="250" height="250" style="display: none;">
+            <defs>
+                <g id="cell">
+                    <rect width="50" height="50" rx="8" ry="8" fill="#007BFF" />
+                </g>
+            </defs>
+        </svg>
+    </div>
 </div>
 
 <div class="mode-selection">
@@ -216,6 +239,13 @@
     for (let i = 0; i < 25; i++) {
         const square = document.createElement('div');
         square.className = 'square';
+        
+        // Определение позиции для каждого квадрата
+        const row = Math.floor(i / 5);
+        const col = i % 5;
+        square.style.backgroundPosition = `-${col * 50}px -${row * 50}px`;
+
+        square.innerHTML = '';
         grid.appendChild(square);
         squares.push(square);
     }
@@ -278,5 +308,7 @@
     });
 </script>
 
+    <img src="molniya.png" alt="Молния слева" class="molniya-left">
+    <img src="molniya2.png" alt="Молния справа" class="molniya-right">
 </body>
 </html>

@@ -3,42 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5x5 Поле с Квадратиками</title>
+    <title>Сигналы Mines</title>
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #000;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-        }
-
-        .floating-dot {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background-color: white;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: float 8s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0% { opacity: 0; transform: translateY(0); }
-            50% { opacity: 1; }
-            100% { opacity: 0; transform: translateY(-50vh); }
-        }
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: url('background.png') no-repeat center center fixed; /* Фон с изображением */
+    background-size: cover; /* Масштабируем фон так, чтобы охватывать всю видимую область */
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
 
         .game-container {
             padding: 10px;
-            border: 5px solid rgba(0, 0, 255, 0.8);
+            border: 3px solid rgba(173, 216, 230, 0.8); /* Тонкая светло-голубая граница */
             border-radius: 15px;
-            background: #001F3F;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 15, 45, 0.9);
+            box-shadow: 0 0 15px 5px rgba(173, 216, 230, 0.6); /* Эффект блеска и свечения */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -56,7 +41,8 @@
         .square {
             width: 50px;
             height: 50px;
-            background-color: #007BFF;
+            background: url('button.png') no-repeat center center;
+            background-size: cover;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -69,9 +55,11 @@
         }
 
         .star {
-            font-size: 40px;
-            color: darkorange;
+            width: 50px; /* Увеличено с 40px */
+            height: 50px; /* Увеличено с 40px */
             position: absolute;
+            background: url('star.png') no-repeat center center;
+            background-size: cover;
             transition: opacity 0.5s, transform 0.5s;
             opacity: 0;
         }
@@ -83,13 +71,13 @@
             padding: 10px;
             border: 2px solid rgba(0, 0, 255, 0.8);
             border-radius: 8px;
-            background: #001F3F;
+            background: rgba(0, 15, 45, 0.9);
             margin-bottom: 15px;
         }
 
         .mode-button {
-            width: 40px;
-            height: 40px;
+            width: 30px; /* Уменьшено с 40px */
+            height: 30px; /* Уменьшено с 40px */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -114,16 +102,16 @@
         }
 
         button {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 25px 50px;
+            font-size: 25px;
             cursor: pointer;
-            background: linear-gradient(to right, #FF7E5F, #FEB47B);
+            background: linear-gradient(to right, #FFA500, #FFD700); /* Оранжево-золотой градиент */
             border: none;
             border-radius: 8px;
             color: white;
             font-weight: bold;
             transition: background 0.3s, transform 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5), 0 0 15px 5px rgba(255, 215, 0, 0.4); /* Лёгкое золотое свечение снаружи */
         }
 
         button:hover {
@@ -134,19 +122,19 @@
         h1 {
             color: white;
             font-size: 32px;
-            margin: 0; /* Удалён отступ */
+            margin: 0;
         }
 
         .username {
             color: white;
             font-size: 16px;
-            margin: 0; /* Удалён отступ */
-            margin-top: -5px; /* Уменьшен отступ сверху для поднятия юзернейма */
+            margin: 0;
+            margin-top: -5px;
         }
 
         .header {
-            text-align: center; /* Центрирование заголовка и юзернейма */
-            margin-bottom: 20px; /* Отступ снизу */
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         @media (max-width: 600px) {
@@ -159,15 +147,12 @@
                 width: 40px;
                 height: 40px;
                 font-size: 18px;
+                background-size: contain; /* Изменяем под мобильный размер */
             }
 
             .star {
-                font-size: 32px;
-            }
-
-            button {
-                padding: 8px 16px;
-                font-size: 14px;
+                width: 32px;
+                height: 32px;
             }
         }
     </style>
@@ -175,8 +160,8 @@
 <body>
 
 <div class="header">
-    <h1>Mines Hack</h1>
-    <h2 class="username">@mines_moments_bot</h2>
+    <h1>imya bota ahah</h1>
+    <h2 class="username">@poshlinahuy</h2>
 </div>
 
 <div class="game-container">
@@ -197,9 +182,9 @@
     let currentStars = [];
     let mode = 1;
     const modeValueDisplay = document.getElementById('modeValue');
-    let isShowingSignal = false; // Переменная для отслеживания состояния
+    let isShowingSignal = false;
 
-    // Создание квадратов на поле
+    // Создание ячеек сетки
     for (let i = 0; i < 25; i++) {
         const square = document.createElement('div');
         square.className = 'square';
@@ -207,23 +192,13 @@
         squares.push(square);
     }
 
-    // Создание плавающих точек
-    for (let i = 0; i < 30; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'floating-dot';
-        dot.style.left = `${Math.random() * 100}vw`;
-        dot.style.top = `${Math.random() * 100}vh`;
-        document.body.appendChild(dot);
-    }
-
-    // Функция показа звезд по одной
     async function showStars() {
-        if (isShowingSignal) return; // Если сигнал уже показывается, выходим из функции
-        isShowingSignal = true; // Устанавливаем флаг, что сигнал показывается
+        if (isShowingSignal) return;
+        isShowingSignal = true;
 
         currentStars.forEach(star => star.remove());
         currentStars = [];
-        
+
         squares.forEach(square => {
             square.style.opacity = '1';
             square.style.visibility = 'visible';
@@ -244,7 +219,7 @@
         for (let i = 0; i < randomIndices.length; i++) {
             const index = randomIndices[i];
             const square = squares[index];
-            
+
             square.style.transition = 'opacity 0.5s';
             square.style.opacity = '0';
 
@@ -252,7 +227,6 @@
 
             const star = document.createElement('div');
             star.className = 'star';
-            star.textContent = '⭐️';
             star.style.left = `${square.offsetLeft + grid.offsetLeft}px`;
             star.style.top = `${square.offsetTop + grid.offsetTop}px`;
             star.style.opacity = '1';
@@ -260,7 +234,7 @@
             currentStars.push(star);
         }
 
-        isShowingSignal = false; // Сбрасываем флаг, когда процесс завершен
+        isShowingSignal = false;
     }
 
     document.getElementById('signalButton').addEventListener('click', showStars);

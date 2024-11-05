@@ -5,25 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сигналы Mines</title>
     <style>
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    background: url('background.png') no-repeat center center fixed; /* Фон с изображением */
-    background-size: cover; /* Масштабируем фон так, чтобы охватывать всю видимую область */
-    font-family: 'Arial', sans-serif;
-    overflow: hidden;
-}
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: #01013c;
+            overflow: hidden;
+        }
 
         .game-container {
             padding: 10px;
             border: 3px solid rgba(173, 216, 230, 0.8); /* Тонкая светло-голубая граница */
-            border-radius: 15px;
+            border-radius: 20px; /* Более округлые углы */
             background: rgba(0, 15, 45, 0.9);
-            box-shadow: 0 0 15px 5px rgba(173, 216, 230, 0.6); /* Эффект блеска и свечения */
+            box-shadow: 
+                inset 0 0 15px rgba(0, 0, 0, 0.8), /* Внутренняя тень для темного эффекта */
+                0 0 20px rgba(0, 216, 230, 0.5), /* Внешнее свечение */
+                0 0 30px rgba(0, 216, 230, 0.3); /* Дополнительная светлая тень для глубины */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -41,8 +42,8 @@ body {
         .square {
             width: 50px;
             height: 50px;
-            background: url('button.png') no-repeat center center;
-            background-size: cover;
+            background: url('cells-mask.1a7021b147b7851ffef6.svg') no-repeat;
+            background-size: 250px 250px; /* Размер всего SVG-файла */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -55,8 +56,8 @@ body {
         }
 
         .star {
-            width: 50px; /* Увеличено с 40px */
-            height: 50px; /* Увеличено с 40px */
+            width: 50px;
+            height: 50px;
             position: absolute;
             background: url('star.png') no-repeat center center;
             background-size: cover;
@@ -66,56 +67,67 @@ body {
 
         .mode-selection {
             display: flex;
+            flex-direction: column;
             align-items: center;
             margin-top: 10px;
-            padding: 10px;
-            border: 2px solid rgba(0, 0, 255, 0.8);
-            border-radius: 8px;
-            background: rgba(0, 15, 45, 0.9);
+            padding: 10px 20px;
+            border-radius: 15px; /* Более округлые углы */
+            background: #1b1b2f; /* Темный фон для выбора режима */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Легкая тень для эффекта объема */
             margin-bottom: 15px;
+            color: #FFFFFF;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .mode-selection label {
+            margin-bottom: 10px;
+            color: #FFFFFF;
+            font-size: 16px;
         }
 
         .mode-button {
-            width: 30px; /* Уменьшено с 40px */
-            height: 30px; /* Уменьшено с 40px */
+            width: 40px; 
+            height: 40px; 
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 10px;
-            background-color: #007BFF;
-            color: white;
+            background-color: #1b1b2f; /* Темный фон для кнопок */
+            color: #FFFFFF; /* Белый текст */
             border: none;
-            border-radius: 8px;
+            border-radius: 50%; /* Округлая форма для кнопок */
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: background 0.3s, transform 0.3s;
         }
 
         .mode-button:hover {
-            background-color: #0056b3;
+            background-color: #343a40; /* Более светлый оттенок при наведении */
         }
 
         #modeValue {
-            color: white;
+            color: #FFFFFF; /* Белый текст для значения режима */
             font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
+            margin: 0 10px;
         }
 
         button {
-            padding: 25px 50px;
-            font-size: 25px;
+            padding: 15px 40px;
+            font-size: 20px;
             cursor: pointer;
-            background: linear-gradient(to right, #FFA500, #FFD700); /* Оранжево-золотой градиент */
+            background: #1976D2; /* Синий цвет кнопки */ /* Темный фон для кнопки */
             border: none;
-            border-radius: 8px;
-            color: white;
+            border-radius: 10px;
+            color: #FFFFFF; /* Белый текст */
             font-weight: bold;
             transition: background 0.3s, transform 0.3s;
-            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5), 0 0 15px 5px rgba(255, 215, 0, 0.4); /* Лёгкое золотое свечение снаружи */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Легкая тень */
         }
 
         button:hover {
-            background: linear-gradient(to right, #FEB47B, #FF7E5F);
+            background: #343a40; /* Более светлый оттенок при наведении */
             transform: scale(1.05);
         }
 
@@ -135,6 +147,17 @@ body {
         .header {
             text-align: center;
             margin-bottom: 20px;
+        }
+
+        .footer-image {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px; /* Высота изображения */
+            background: url('downbackground.png') no-repeat center bottom;
+            background-size: cover;
+            z-index: -1; /* Чтобы изображение находилось поверх основного фона */
         }
 
         @media (max-width: 600px) {
@@ -160,8 +183,8 @@ body {
 <body>
 
 <div class="header">
-    <h1>Name Bota</h1>
-    <h2 class="username">@teg_bota</h2>
+    <h1>Bot Name</h1>
+    <h2 class="username">teg_bota</h2>
 </div>
 
 <div class="game-container">
@@ -169,12 +192,17 @@ body {
 </div>
 
 <div class="mode-selection">
-    <button class="mode-button" id="decrement">-</button>
-    <div id="modeValue">1</div>
-    <button class="mode-button" id="increment">+</button>
+    <label for="modeValue">Кол-во ловушек</label>
+    <div style="display: flex; align-items: center;">
+        <button class="mode-button" id="decrement">-</button>
+        <div id="modeValue">1</div>
+        <button class="mode-button" id="increment">+</button>
+    </div>
 </div>
 
 <button id="signalButton">Получить сигнал</button>
+
+<div class="footer-image"></div>
 
 <script>
     const grid = document.getElementById('grid');
@@ -188,6 +216,12 @@ body {
     for (let i = 0; i < 25; i++) {
         const square = document.createElement('div');
         square.className = 'square';
+        
+        // Определение позиции для каждого квадрата
+        const row = Math.floor(i / 5);
+        const col = i % 5;
+        square.style.backgroundPosition = `-${col * 50}px -${row * 50}px`;
+
         grid.appendChild(square);
         squares.push(square);
     }

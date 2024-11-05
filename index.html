@@ -42,7 +42,7 @@
         .square {
             width: 50px;
             height: 50px;
-            background: none;
+            background: url('button.png') no-repeat center center; background-size: cover;
             background-size: 250px 250px; /* Размер всего SVG-файла */
             display: flex;
             align-items: center;
@@ -230,7 +230,7 @@
         const col = i % 5;
         square.style.backgroundPosition = `-${col * 50}px -${row * 50}px`;
 
-        square.innerHTML = '<svg width="50" height="50"><use href="#cell"></use></svg>';
+        square.innerHTML = '';
         grid.appendChild(square);
         squares.push(square);
     }

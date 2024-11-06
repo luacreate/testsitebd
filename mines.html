@@ -285,8 +285,8 @@
             // Создание звезды
             const star = document.createElement('div');
             star.className = 'star';
-            star.style.left = `${square.offsetLeft + square.offsetWidth / 2 - 25}px`;
-            star.style.top = `${square.offsetTop + square.offsetHeight / 2 - 25}px`;
+            star.style.left = `${square.offsetLeft + square.clientWidth / 2 - 25}px`;
+            star.style.top = `${square.offsetTop + square.clientHeight / 2 - 25}px`;
             star.style.opacity = '1';
 
             // Добавляем звезду в контейнер grid

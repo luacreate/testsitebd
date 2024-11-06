@@ -1,1 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1Win Access</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: url('redsoftlogo.png') no-repeat center center;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            color: white;
+        }
 
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border-radius: 20px;
+            background: rgba(50, 50, 50, 0.9);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .logo {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin: 0;
+            margin-bottom: 15px;
+        }
+
+        input {
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 2px solid #1b1b2f;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            background: #333;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .button {
+            padding: 15px 40px;
+            font-size: 20px;
+            cursor: pointer;
+            background: #1976D2;
+            border: none;
+            border-radius: 10px;
+            color: #FFFFFF;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            margin-top: 10px;
+        }
+
+        .button:hover {
+            background: #343a40;
+            transform: scale(1.05);
+        }
+
+        .create-account-button {
+            background-color: #b36bff;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .support {
+            margin-top: 20px;
+            color: white;
+        }
+
+        .support a {
+            color: #9d0fff;
+            text-decoration: none;
+        }
+
+        .support a:hover {
+            text-decoration: underline;
+        }
+
+        .language-selection {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
+            input {
+                max-width: 200px;
+            }
+
+            .button {
+                padding: 10px 30px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <div class="language-selection">
+        <button class="button" onclick="setLanguage('en')">English</button>
+        <button class="button" onclick="setLanguage('ru')">Русский</button>
+    </div>
+
+    <div class="container" id="mainContainer">
+        <img src="https://1winbd.com/wp-content/uploads/2022/10/lucky-jet-header.webp" alt="Логотип" class="logo" />
+        <h1 id="heading">Enter your 1Win account ID</h1>
+        <input type="text" id="accountId" placeholder="Account ID" />
+        <div class="button-container">
+            <button class="button" onclick="checkAccess()" id="connectButton">Connect</button>
+            <button class="button create-account-button" onclick="createAccount()" id="createAccountButton">Create Account</button>
+        </div>
+        <div class="error hidden" id="errorMsg"></div>
+        <div class="loading hidden" id="loading">Checking ID...</div>
+    </div>
+
+    <div class="support">
+        <span id="supportText">Support:</span> <a href="https://t.me/adm_1w" target="_blank" id="supportLink">Contact on Telegram</a>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                heading: "Enter your 1Win account ID",
+                placeholder: "Account ID",
+                connectButton: "Connect",
+                createAccountButton: "Create Account",
+                errorText: "Account not authorized.",
+                loading: "Checking ID...",
+                supportText: "Support:",
+                supportLink: "Contact on Telegram",
+                createAccountUrl: "https://telegra.ph/Proper-account-registration-for-our-app-10-30"
+            },
+            ru: {
+                heading: "Введите ID вашего аккаунта 1win",
+                placeholder: "ID аккаунта",
+                connectButton: "Подключиться",
+                createAccountButton: "Создать аккаунт",
+                errorText: "Аккаунт не подходит.",
+                loading: "Проверка ID...",
+                supportText: "Тех. Поддержка:",
+                supportLink: "Написать в Telegram",
+                createAccountUrl: "https://telegra.ph/Vozmozhnye-oshibki-pri-registracii-10-20"
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        function setLanguage(language) {
+            currentLanguage = language;
+            document.getElementById("heading").textContent = translations[language].heading;
+            document.getElementById("accountId").placeholder = translations[language].placeholder;
+            document.getElementById("connectButton").textContent = translations[language].connectButton;
+            document.getElementById("createAccountButton").textContent = translations[language].createAccountButton;
+            document.getElementById("loading").textContent = translations[language].loading;
+            document.getElementById("supportText").textContent = translations[language].supportText;
+            document.getElementById("supportLink").textContent = translations[language].supportLink;
+        }
+
+        function createAccount() {
+            const url = translations[currentLanguage].createAccountUrl;
+            window.open(url, '_blank');
+        }
+
+        function checkAccess() {
+            const accountId = document.getElementById("accountId").value;
+            const errorMsg = document.getElementById("errorMsg");
+            const loadingElement = document.getElementById("loading");
+
+            errorMsg.classList.add("hidden");
+            loadingElement.classList.remove("hidden");
+
+            setTimeout(() => {
+                if (['95469150', '97012376', '95466596', '96481620', '96956933', '97044530', '97057595', '96903914', '772277'].includes(accountId)) {
+                    loadingElement.classList.add("hidden");
+                    alert('Account authorized. Proceeding to game.');
+                } else {
+                    loadingElement.classList.add("hidden");
+                    errorMsg.textContent = translations[currentLanguage].errorText;
+                    errorMsg.classList.remove("hidden");
+                }
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

@@ -18,37 +18,42 @@
             color: white;
         }
 
-        .background {
+        .overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(255,0,0,0.2), transparent 70%);
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 0;
         }
 
-        .circuit-pattern {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+        .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border-radius: 20px;
+            background: rgba(50, 50, 50, 0.9);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
-        .glow-circle {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,69,0,0.8), rgba(0,0,0,0));
-            box-shadow: 0 0 20px 15px rgba(255,69,0,0.5);
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-        .glow-circle.center {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        h1 {
+            font-size: 32px;
+            margin: 0;
+        }
+
+        .username {
+            font-size: 16px;
+            margin: 0;
+            margin-top: -5px;
         }
 
         .game-container {
@@ -64,8 +69,6 @@
             flex-direction: column;
             align-items: center;
             margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
         }
 
         .grid {
@@ -109,7 +112,7 @@
             margin-top: 10px;
             padding: 10px 20px;
             border-radius: 15px;
-            background: #1b1b2f;
+            background: rgba(27, 27, 47, 0.9);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             margin-bottom: 15px;
             color: #FFFFFF;
@@ -168,35 +171,6 @@
             transform: scale(1.05);
         }
 
-        h1 {
-            color: white;
-            font-size: 32px;
-            margin: 0;
-        }
-
-        .username {
-            color: white;
-            font-size: 16px;
-            margin: 0;
-            margin-top: -5px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .footer-image {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 150px;
-            background: url('downbackground.png') no-repeat center bottom;
-            background-size: cover;
-            z-index: -1;
-        }
-
         @media (max-width: 600px) {
             .grid {
                 grid-template-columns: repeat(5, 40px);
@@ -219,27 +193,29 @@
 </head>
 <body>
 
-<div class="header">
-    <h1>Bot Name</h1>
-    <h2 class="username">teg_bota</h2>
-</div>
+<div class="overlay"></div>
 
-<div class="game-container">
-    <div class="grid" id="grid"></div>
-</div>
-
-<div class="mode-selection">
-    <label for="modeValue">Кол-во ловушек</label>
-    <div style="display: flex; align-items: center;">
-        <button class="mode-button" id="decrement">-</button>
-        <div id="modeValue">1</div>
-        <button class="mode-button" id="increment">+</button>
+<div class="container">
+    <div class="header">
+        <h1>Bot Name</h1>
+        <h2 class="username">teg_bota</h2>
     </div>
+
+    <div class="game-container">
+        <div class="grid" id="grid"></div>
+    </div>
+
+    <div class="mode-selection">
+        <label for="modeValue">Кол-во ловушек</label>
+        <div style="display: flex; align-items: center;">
+            <button class="mode-button" id="decrement">-</button>
+            <div id="modeValue">1</div>
+            <button class="mode-button" id="increment">+</button>
+        </div>
+    </div>
+
+    <button id="signalButton">Получить сигнал</button>
 </div>
-
-<button id="signalButton">Получить сигнал</button>
-
-<div class="footer-image"></div>
 
 <script>
     const grid = document.getElementById('grid');

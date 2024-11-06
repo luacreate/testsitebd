@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сигналы Mines</title>
+    <title>1Win Access</title>
     <style>
         body {
             margin: 0;
@@ -40,125 +40,24 @@
             border-radius: 20px;
             background: rgba(50, 50, 50, 0.9);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            max-width: 95%;
+            max-width: 90%;
+            text-align: center;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
+        .logo {
+            width: 80px;
+            margin-bottom: 15px;
         }
 
         h1 {
             font-size: 36px;
             margin: 0;
-        }
-
-        .username {
-            font-size: 18px;
-            margin: 0;
-            margin-top: -5px;
-        }
-
-        .game-container {
-            padding: 15px;
-            border: 3px solid rgba(173, 216, 230, 0.8);
-            border-radius: 20px;
-            background: rgba(0, 15, 45, 0.9);
-            box-shadow: 
-                inset 0 0 15px rgba(0, 0, 0, 0.8),
-                0 0 20px rgba(0, 216, 230, 0.5),
-                0 0 30px rgba(0, 216, 230, 0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(5, 55px);
-            grid-template-rows: repeat(5, 55px);
-            gap: 6px;
-            position: relative;
-        }
-
-        .square {
-            width: 55px;
-            height: 55px;
-            background: url('button.png') no-repeat center center;
-            background-size: 275px 275px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s;
-            opacity: 1;
-        }
-
-        .star {
-            width: 55px;
-            height: 55px;
-            position: absolute;
-            background: url('star.png') no-repeat center center;
-            background-size: cover;
-            transition: opacity 0.5s, transform 0.5s;
-            opacity: 0;
-        }
-
-        .mode-selection {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 15px;
-            padding: 15px 25px;
-            border-radius: 15px;
-            background: rgba(27, 27, 47, 0.9);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
-            color: #FFFFFF;
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .mode-selection label {
             margin-bottom: 15px;
-            color: #FFFFFF;
-            font-size: 18px;
         }
 
-        .mode-button {
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 12px;
-            background-color: #1b1b2f;
-            color: #FFFFFF;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background 0.3s, transform 0.3s;
-        }
-
-        .mode-button:hover {
-            background-color: #343a40;
-        }
-
-        #modeValue {
-            color: #FFFFFF;
-            font-weight: bold;
-            font-size: 22px;
-            margin: 0 12px;
-        }
-
-        button {
-            padding: 18px 45px;
-            font-size: 22px;
+        .button {
+            padding: 15px 40px;
+            font-size: 20px;
             cursor: pointer;
             background: #1976D2;
             border: none;
@@ -167,149 +66,122 @@
             font-weight: bold;
             transition: background 0.3s, transform 0.3s;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            margin-top: 10px;
         }
 
-        button:hover {
+        .button:hover {
             background: #343a40;
             transform: scale(1.05);
         }
 
-        .button-container {
-            margin-top: 25px;
-            display: flex;
+        .multiplier-container {
+            position: relative;
+            display: inline-flex;
             justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            width: 150px;
+            height: 150px;
+        }
+
+        .multiplier-circle {
+            position: absolute;
             width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px dashed rgba(0, 212, 255, 0.8);
+            animation: spin 15s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .multiplier {
+            font-size: 3.5em;
+            color: #00ffcc;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .multiplier.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .support {
+            position: fixed;
+            bottom: 20px;
+            color: white;
+            z-index: 1;
+            background: rgba(50, 50, 50, 0.8);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .support a {
+            color: #9d0fff;
+            text-decoration: none;
+        }
+
+        .support a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 600px) {
-            .grid {
-                grid-template-columns: repeat(5, 45px);
-                grid-template-rows: repeat(5, 45px);
+            .button {
+                padding: 10px 25px;
+                font-size: 16px;
             }
 
-            .square {
-                width: 45px;
-                height: 45px;
-                font-size: 20px;
-                background-size: contain;
+            .multiplier-container {
+                width: 120px;
+                height: 120px;
             }
 
-            .star {
-                width: 40px;
-                height: 40px;
+            .multiplier {
+                font-size: 3em;
             }
         }
     </style>
 </head>
 <body>
+    <div class="overlay"></div>
 
-<div class="overlay"></div>
-
-<div class="container">
-    <div class="header">
-        <h1>Bot Name</h1>
-        <h2 class="username">teg_bota</h2>
-    </div>
-
-    <div class="game-container">
-        <div class="grid" id="grid"></div>
-    </div>
-
-    <div class="mode-selection">
-        <label for="modeValue">Кол-во ловушек</label>
-        <div style="display: flex; align-items: center;">
-            <button class="mode-button" id="decrement">-</button>
-            <div id="modeValue">1</div>
-            <button class="mode-button" id="increment">+</button>
+    <div class="container" id="mainContainer">
+        <img src="https://1winbd.com/wp-content/uploads/2022/10/lucky-jet-header.webp" alt="Логотип" class="logo" />
+        <h1 id="heading">Red Soft Signals </h1>
+        
+        <div class="multiplier-container">
+            <div class="multiplier-circle"></div>
+            <div class="multiplier" id="multiplier">x0.00</div>
         </div>
+        <button class="button" onclick="generateRandomMultiplier()">Получить сигнал</button>
     </div>
 
-    <div class="button-container">
-        <button id="signalButton">Получить сигнал</button>
+    <div class="support">
+        <span id="supportText">Тех. Поддержка:</span> <a href="https://t.me/adm_1w" target="_blank" id="supportLink">Написать в Telegram</a>
     </div>
-</div>
 
-<script>
-    const grid = document.getElementById('grid');
-    const squares = [];
-    let currentStars = [];
-    let mode = 1;
-    const modeValueDisplay = document.getElementById('modeValue');
-    let isShowingSignal = false;
+    <script>
+        function generateRandomMultiplier() {
+            const multiplierElement = document.getElementById("multiplier");
 
-    // Создание ячеек сетки
-    for (let i = 0; i < 25; i++) {
-        const square = document.createElement('div');
-        square.className = 'square';
-        grid.appendChild(square);
-        squares.push(square);
-    }
-
-    async function showStars() {
-        if (isShowingSignal) return;
-        isShowingSignal = true;
-
-        // Удаляем существующие звезды
-        currentStars.forEach(star => star.remove());
-        currentStars = [];
-
-        // Возвращаем ячейки в исходное состояние
-        squares.forEach(square => {
-            square.style.opacity = '1';
-            square.style.visibility = 'visible';
-        });
-
-        // Определение количества звезд для текущего режима
-        let starsToShow;
-        if (mode === 1) starsToShow = 10;
-        else if (mode === 3) starsToShow = 5;
-        else if (mode === 5) starsToShow = 4;
-        else if (mode === 7) starsToShow = 3;
-
-        // Генерация случайных индексов для звезд
-        const randomIndices = [];
-        while (randomIndices.length < starsToShow) {
-            const randomIndex = Math.floor(Math.random() * 25);
-            if (!randomIndices.includes(randomIndex)) randomIndices.push(randomIndex);
+            multiplierElement.classList.remove("show");
+            setTimeout(() => {
+                const randomMultiplier = (Math.random() * 9 + 1).toFixed(2);
+                multiplierElement.textContent = `x${randomMultiplier}`;
+                multiplierElement.classList.add("show");
+            }, 2000);
         }
-
-        // Показ звезд
-        for (let i = 0; i < randomIndices.length; i++) {
-            const index = randomIndices[i];
-            const square = squares[index];
-
-            square.style.transition = 'opacity 0.5s';
-            square.style.opacity = '0';
-
-            await new Promise(resolve => setTimeout(resolve, 500));
-
-            // Создание звезды
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = `${square.offsetLeft + square.clientWidth / 2 - 15}px`;
-            star.style.top = `${square.offsetTop + square.clientHeight / 2 - 15}px`;
-            star.style.opacity = '1';
-
-            // Добавляем звезду в контейнер grid
-            grid.appendChild(star);
-            currentStars.push(star);
-        }
-
-        isShowingSignal = false;
-    }
-
-    document.getElementById('signalButton').addEventListener('click', showStars);
-
-    document.getElementById('increment').addEventListener('click', () => {
-        if (mode < 7) mode += 2;
-        modeValueDisplay.textContent = mode;
-    });
-
-    document.getElementById('decrement').addEventListener('click', () => {
-        if (mode > 1) mode -= 2;
-        modeValueDisplay.textContent = mode;
-    });
-</script>
-
+    </script>
 </body>
 </html>

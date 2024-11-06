@@ -149,8 +149,7 @@
             <button class="button" onclick="checkAccess()" id="connectButton">Connect</button>
             <button class="button create-account-button" onclick="createAccount()" id="createAccountButton">Create Account</button>
         </div>
-        <div class="error hidden" id="errorMsg"></div>
-        <div class="loading hidden" id="loading">Checking ID...</div>
+        
     </div>
 
     <div class="support">
@@ -202,18 +201,8 @@
         }
 
         function checkAccess() {
-            const accountId = document.getElementById("accountId").value;
-            const errorMsg = document.getElementById("errorMsg");
-            const loadingElement = document.getElementById("loading");
-
-            errorMsg.classList.add("hidden");
-            loadingElement.classList.remove("hidden");
-
-            setTimeout(() => {
-                if (['95469150', '97012376', '95466596', '96481620', '96956933', '97044530', '97057595', '96903914', '772277'].includes(accountId)) {
-                    loadingElement.classList.add("hidden");
-                    alert('Account authorized. Proceeding to game.');
-                } else {
+            alert('Proceeding to game.');
+        } else {
                     loadingElement.classList.add("hidden");
                     errorMsg.textContent = translations[currentLanguage].errorText;
                     errorMsg.classList.remove("hidden");

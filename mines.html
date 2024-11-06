@@ -248,26 +248,31 @@
         if (isShowingSignal) return;
         isShowingSignal = true;
 
+        // Удаляем существующие звезды
         currentStars.forEach(star => star.remove());
         currentStars = [];
 
+        // Возвращаем ячейки в исходное состояние
         squares.forEach(square => {
             square.style.opacity = '1';
             square.style.visibility = 'visible';
         });
 
+        // Определение количества звезд для текущего режима
         let starsToShow;
         if (mode === 1) starsToShow = 10;
         else if (mode === 3) starsToShow = 5;
         else if (mode === 5) starsToShow = 4;
         else if (mode === 7) starsToShow = 3;
 
+        // Генерация случайных индексов для звезд
         const randomIndices = [];
         while (randomIndices.length < starsToShow) {
             const randomIndex = Math.floor(Math.random() * 25);
             if (!randomIndices.includes(randomIndex)) randomIndices.push(randomIndex);
         }
 
+        // Показ звезд
         for (let i = 0; i < randomIndices.length; i++) {
             const index = randomIndices[i];
             const square = squares[index];
@@ -277,12 +282,16 @@
 
             await new Promise(resolve => setTimeout(resolve, 500));
 
+            // Создание звезды
             const star = document.createElement('div');
             star.className = 'star';
-            star.style.left = `${square.offsetLeft + grid.offsetLeft}px`;
-            star.style.top = `${square.offsetTop + grid.offsetTop}px`;
+            star.style.left = `${square.offsetLeft}px`;
+            star.style.top = `${square.offsetTop}px`;
             star.style.opacity = '1';
-            document.body.appendChild(star);
+            star.style.transform = 'translate(-50%, -50%)';  // Центрирование звезды по позиции квадрата
+
+            // Добавляем звезду в контейнер grid
+            grid.appendChild(star);
             currentStars.push(star);
         }
 

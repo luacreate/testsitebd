@@ -43,7 +43,7 @@
         .game-option {
             margin: 15px 0;
             width: 250px;
-            padding: 10px;
+            padding: 20px;
             background: rgba(255, 165, 0, 0.8);
             border-radius: 15px;
             display: flex;
@@ -51,24 +51,14 @@
             align-items: center;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .game-option:hover {
             transform: scale(1.05);
             box-shadow: 0 4px 15px rgba(255, 69, 0, 0.5);
-        }
-
-        .game-logo {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 10px;
-            object-fit: cover; /* Сделано для корректного отображения, даже если изображения не идеального размера */
-        }
-
-        .game-name {
-            font-size: 18px;
-            color: #0d0d0d;
-            font-weight: bold;
         }
     </style>
 </head>
@@ -77,12 +67,10 @@
 <div class="container">
     <h2>Выберите игру</h2>
     <div class="game-option" onclick="window.location.href='luckyjet.html'">
-        <img src="luckyjet_logo.png" alt="Lucky Jet" class="game-logo">
-        <div class="game-name">Lucky Jet</div>
+        Lucky Jet
     </div>
     <div class="game-option" onclick="window.location.href='mines.html'">
-        <img src="mines_logo.png" alt="Mines" class="game-logo">
-        <div class="game-name">Mines</div>
+        Mines
     </div>
 </div>
 

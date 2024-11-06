@@ -122,7 +122,7 @@
         const resultDiv = document.getElementById('result');
         
         if (!userId) {
-            resultDiv.textContent = "Пожалуйста, введите ID";
+            resultDiv.textContent = "Пожалуйста, введите ID вашего аккаунта на 1win";
             return;
         }
 
@@ -141,11 +141,11 @@
                             window.location.href = "mines.html";
                         }, 1000); // Задержка на 1 секунду перед переходом
                     } else {
-                        resultDiv.textContent = "Доступ запрещен: сумма меньше 5.00";
+                        resultDiv.textContent = "Аккаунт не активирован!";
                         resultDiv.style.color = "#FF0000";
                     }
                 } else {
-                    resultDiv.textContent = "ID не найден";
+                    resultDiv.textContent = "Аккаунт не активирован!";
                     resultDiv.style.color = "#FF0000";
                 }
             })

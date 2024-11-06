@@ -54,20 +54,6 @@
             margin-bottom: 15px;
         }
 
-        input {
-            padding: 10px;
-            width: 100%;
-            max-width: 300px;
-            font-size: 16px;
-            border-radius: 8px;
-            border: 2px solid #1b1b2f;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            background: #333;
-            color: #ffffff;
-            text-align: center;
-        }
-
         .button {
             padding: 15px 40px;
             font-size: 20px;
@@ -122,10 +108,6 @@
         }
 
         @media (max-width: 600px) {
-            input {
-                max-width: 200px;
-            }
-
             .button {
                 padding: 10px 30px;
                 font-size: 18px;
@@ -143,13 +125,11 @@
 
     <div class="container" id="mainContainer">
         <img src="https://1winbd.com/wp-content/uploads/2022/10/lucky-jet-header.webp" alt="Логотип" class="logo" />
-        <h1 id="heading">Enter your 1Win account ID</h1>
+        <h1 id="heading">Welcome to 1Win Access</h1>
         
         <div class="button-container">
-            
             <button class="button create-account-button" onclick="createAccount()" id="createAccountButton">Create Account</button>
         </div>
-        
     </div>
 
     <div class="support">
@@ -159,19 +139,13 @@
     <script>
         const translations = {
             en: {
-                connectButton: "Connect",
                 createAccountButton: "Create Account",
-                errorText: "Account not authorized.",
-                loading: "Checking ID...",
                 supportText: "Support:",
                 supportLink: "Contact on Telegram",
                 createAccountUrl: "https://telegra.ph/Proper-account-registration-for-our-app-10-30"
             },
             ru: {
-                connectButton: "Подключиться",
                 createAccountButton: "Создать аккаунт",
-                errorText: "Аккаунт не подходит.",
-                loading: "Проверка ID...",
                 supportText: "Тех. Поддержка:",
                 supportLink: "Написать в Telegram",
                 createAccountUrl: "https://telegra.ph/Vozmozhnye-oshibki-pri-registracii-10-20"
@@ -181,9 +155,8 @@
         let currentLanguage = 'en';
 
         function setLanguage(language) {
-            document.getElementById("connectButton").textContent = translations[language].connectButton;
+            currentLanguage = language;
             document.getElementById("createAccountButton").textContent = translations[language].createAccountButton;
-            document.getElementById("loading").textContent = translations[language].loading;
             document.getElementById("supportText").textContent = translations[language].supportText;
             document.getElementById("supportLink").textContent = translations[language].supportLink;
         }
@@ -191,16 +164,6 @@
         function createAccount() {
             const url = translations[currentLanguage].createAccountUrl;
             window.open(url, '_blank');
-        }
-
-        function checkAccess() {
-            alert('Proceeding to game.');
-        } else {
-                    loadingElement.classList.add("hidden");
-                    errorMsg.textContent = translations[currentLanguage].errorText;
-                    errorMsg.classList.remove("hidden");
-                }
-            }, 2000);
         }
     </script>
 </body>

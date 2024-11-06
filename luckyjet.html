@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,38 +73,46 @@
             transform: scale(1.05);
         }
 
-        .create-account-button {
-            background-color: #b36bff;
-        }
-
-        .button-container {
-            margin-top: 20px;
-            display: flex;
+        .multiplier-container {
+            position: relative;
+            display: inline-flex;
             justify-content: center;
-            width: 100%;
-            flex-direction: column;
             align-items: center;
+            margin: 20px 0;
+            width: 150px;
+            height: 150px;
         }
 
-        .support {
-            margin-top: 20px;
-            color: white;
+        .multiplier-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px dashed rgba(0, 212, 255, 0.8);
+            animation: spin 15s linear infinite;
         }
 
-        .support a {
-            color: #9d0fff;
-            text-decoration: none;
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
-        .support a:hover {
-            text-decoration: underline;
+        .multiplier {
+            font-size: 3.5em;
+            color: #00ffcc;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 1s ease, transform 1s ease;
         }
 
-        .language-selection {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            gap: 10px;
+        .multiplier.show {
+            opacity: 1;
+            transform: scale(1);
         }
 
         @media (max-width: 600px) {
@@ -118,52 +126,31 @@
 <body>
     <div class="overlay"></div>
 
-    <div class="language-selection">
-        <button class="button" onclick="setLanguage('en')">English</button>
-        <button class="button" onclick="setLanguage('ru')">Русский</button>
-    </div>
-
     <div class="container" id="mainContainer">
         <img src="https://1winbd.com/wp-content/uploads/2022/10/lucky-jet-header.webp" alt="Логотип" class="logo" />
-        <h1 id="heading">Welcome to 1Win Access</h1>
+        <h1 id="heading">Добро пожаловать в 1Win Access</h1>
         
-        <div class="button-container">
-            <button class="button create-account-button" onclick="createAccount()" id="createAccountButton">Create Account</button>
+        <div class="multiplier-container">
+            <div class="multiplier-circle"></div>
+            <div class="multiplier" id="multiplier">x0.00</div>
         </div>
+        <button class="button" onclick="generateRandomMultiplier()">Получить сигнал</button>
     </div>
 
     <div class="support">
-        <span id="supportText">Support:</span> <a href="https://t.me/adm_1w" target="_blank" id="supportLink">Contact on Telegram</a>
+        <span id="supportText">Тех. Поддержка:</span> <a href="https://t.me/adm_1w" target="_blank" id="supportLink">Написать в Telegram</a>
     </div>
 
     <script>
-        const translations = {
-            en: {
-                createAccountButton: "Create Account",
-                supportText: "Support:",
-                supportLink: "Contact on Telegram",
-                createAccountUrl: "https://telegra.ph/Proper-account-registration-for-our-app-10-30"
-            },
-            ru: {
-                createAccountButton: "Создать аккаунт",
-                supportText: "Тех. Поддержка:",
-                supportLink: "Написать в Telegram",
-                createAccountUrl: "https://telegra.ph/Vozmozhnye-oshibki-pri-registracii-10-20"
-            }
-        };
+        function generateRandomMultiplier() {
+            const multiplierElement = document.getElementById("multiplier");
 
-        let currentLanguage = 'en';
-
-        function setLanguage(language) {
-            currentLanguage = language;
-            document.getElementById("createAccountButton").textContent = translations[language].createAccountButton;
-            document.getElementById("supportText").textContent = translations[language].supportText;
-            document.getElementById("supportLink").textContent = translations[language].supportLink;
-        }
-
-        function createAccount() {
-            const url = translations[currentLanguage].createAccountUrl;
-            window.open(url, '_blank');
+            multiplierElement.classList.remove("show");
+            setTimeout(() => {
+                const randomMultiplier = (Math.random() * 9 + 1).toFixed(2);
+                multiplierElement.textContent = `x${randomMultiplier}`;
+                multiplierElement.classList.add("show");
+            }, 2000);
         }
     </script>
 </body>

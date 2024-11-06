@@ -9,6 +9,7 @@
             margin: 0;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             background: url('redsoftlogo.png') no-repeat center center;
@@ -38,6 +39,7 @@
             border-radius: 20px;
             background: rgba(50, 50, 50, 0.9);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-width: 90%;
         }
 
         .header {
@@ -171,6 +173,13 @@
             transform: scale(1.05);
         }
 
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
         @media (max-width: 600px) {
             .grid {
                 grid-template-columns: repeat(5, 40px);
@@ -214,7 +223,9 @@
         </div>
     </div>
 
-    <button id="signalButton">Получить сигнал</button>
+    <div class="button-container">
+        <button id="signalButton">Получить сигнал</button>
+    </div>
 </div>
 
 <script>

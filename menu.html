@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор игры</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('redsoftlogo.png') no-repeat center center;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,0,0,0.2), transparent 70%);
+        }
+
+        .circuit-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .glow-circle {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,69,0,0.8), rgba(0,0,0,0));
+            box-shadow: 0 0 20px 15px rgba(255,69,0,0.5);
+        }
+
+        .glow-circle.center {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .container {
+            padding: 20px;
+            border: 3px solid rgba(255, 165, 0, 0.8);
+            border-radius: 20px;
+            background: rgba(50, 0, 0, 0.9);
+            box-shadow: 
+                inset 0 0 15px rgba(0, 0, 0, 0.8),
+                0 0 20px rgba(255, 69, 0, 0.5),
+                0 0 30px rgba(255, 69, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .game-option {
+            margin: 15px 0;
+            width: 250px;
+            padding: 10px;
+            background: rgba(255, 165, 0, 0.8);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .game-option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.5);
+        }
+
+        .game-logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        .game-name {
+            font-size: 18px;
+            color: #0d0d0d;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="background"></div>
+
+<div class="circuit-pattern">
+    <svg width="100%" height="100%">
+        <defs>
+            <pattern id="circuit" x="0" y="0" width="0.05" height="0.05" patternUnits="userSpaceOnUse">
+                <path d="M 0 5 L 10 5 M 5 0 L 5 10" stroke="rgba(255,0,0,0.5)" stroke-width="1"/>
+            </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#circuit)" />
+    </svg>
+</div>
+
+<div class="glow-circle center"></div>
+
+<div class="container">
+    <h2>Выберите игру</h2>
+    <div class="game-option" onclick="window.location.href='luckyjet.html'">
+        <img src="luckyjet_logo.png" alt="Lucky Jet" class="game-logo">
+        <div class="game-name">Lucky Jet</div>
+    </div>
+    <div class="game-option" onclick="window.location.href='mines.html'">
+        <img src="mines_logo.png" alt="Mines" class="game-logo">
+        <div class="game-name">Mines</div>
+    </div>
+</div>
+
+</body>
+</html>

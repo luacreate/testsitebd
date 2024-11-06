@@ -144,9 +144,9 @@
     <div class="container" id="mainContainer">
         <img src="https://1winbd.com/wp-content/uploads/2022/10/lucky-jet-header.webp" alt="Логотип" class="logo" />
         <h1 id="heading">Enter your 1Win account ID</h1>
-        <input type="text" id="accountId" placeholder="Account ID" />
+        
         <div class="button-container">
-            <button class="button" onclick="checkAccess()" id="connectButton">Connect</button>
+            
             <button class="button create-account-button" onclick="createAccount()" id="createAccountButton">Create Account</button>
         </div>
         
@@ -159,8 +159,6 @@
     <script>
         const translations = {
             en: {
-                heading: "Enter your 1Win account ID",
-                placeholder: "Account ID",
                 connectButton: "Connect",
                 createAccountButton: "Create Account",
                 errorText: "Account not authorized.",
@@ -170,8 +168,6 @@
                 createAccountUrl: "https://telegra.ph/Proper-account-registration-for-our-app-10-30"
             },
             ru: {
-                heading: "Введите ID вашего аккаунта 1win",
-                placeholder: "ID аккаунта",
                 connectButton: "Подключиться",
                 createAccountButton: "Создать аккаунт",
                 errorText: "Аккаунт не подходит.",
@@ -185,9 +181,6 @@
         let currentLanguage = 'en';
 
         function setLanguage(language) {
-            currentLanguage = language;
-            document.getElementById("heading").textContent = translations[language].heading;
-            document.getElementById("accountId").placeholder = translations[language].placeholder;
             document.getElementById("connectButton").textContent = translations[language].connectButton;
             document.getElementById("createAccountButton").textContent = translations[language].createAccountButton;
             document.getElementById("loading").textContent = translations[language].loading;

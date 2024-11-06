@@ -3,159 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Проверка доступа</title>
+    <title>Red Soft Background</title>
     <style>
         body {
+            margin: 0;
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background: #01013c;
-            overflow: hidden;
-            color: white;
+            background: #0d0d0d;
             font-family: Arial, sans-serif;
+            overflow: hidden;
         }
 
-        .container {
-            padding: 20px;
-            border: 3px solid rgba(173, 216, 230, 0.8);
-            border-radius: 20px;
-            background: rgba(0, 15, 45, 0.9);
-            box-shadow: 
-                inset 0 0 15px rgba(0, 0, 0, 0.8),
-                0 0 20px rgba(0, 216, 230, 0.5),
-                0 0 30px rgba(0, 216, 230, 0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        h2 {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        input {
-            padding: 10px;
-            width: 100%;
-            font-size: 16px;
-            border-radius: 8px;
-            border: 2px solid #1b1b2f;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            background: #01013c;
-            color: #ffffff;
-            text-align: center;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background: #1976D2;
-            border: none;
-            border-radius: 10px;
-            color: #FFFFFF;
-            font-weight: bold;
-            transition: background 0.3s, transform 0.3s;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-        }
-
-        button:hover {
-            background: #343a40;
-            transform: scale(1.05);
-        }
-
-        #result {
-            margin-top: 15px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .footer-image {
+        .background {
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
             width: 100%;
-            height: 150px;
-            background: url('downbackground.png') no-repeat center bottom;
-            background-size: cover;
-            z-index: -1;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,0,0,0.2), transparent 70%);
         }
 
-        .molniya-left {
+        .circuit-pattern {
             position: absolute;
+            top: 0;
             left: 0;
-            bottom: 50%;
-            width: 50px;
-            z-index: -1;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
 
-        .molniya-right {
+        .glow-circle {
             position: absolute;
-            right: 0;
-            top: 10px;
-            width: 50px;
-            z-index: -1;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,69,0,0.8), rgba(0,0,0,0));
+            box-shadow: 0 0 20px 15px rgba(255,69,0,0.5);
+        }
+
+        .glow-circle.center {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Введите ID аккаунта 1win</h2>
-    <input type="text" id="userId" placeholder="Введите ID">
-    <button onclick="checkAccess()">Подключиться</button>
-    <div id="result"></div>
+<div class="background"></div>
+
+<div class="circuit-pattern">
+    <svg width="100%" height="100%">
+        <defs>
+            <pattern id="circuit" x="0" y="0" width="0.05" height="0.05" patternUnits="userSpaceOnUse">
+                <path d="M 0 5 L 10 5 M 5 0 L 5 10" stroke="rgba(255,0,0,0.5)" stroke-width="1"/>
+            </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#circuit)" />
+    </svg>
 </div>
 
-<div class="footer-image"></div>
-<img src="molniya.png" alt="molniya.png" class="molniya-left">
-<img src="molniya2.png" alt="molniya2.png" class="molniya-right">
-
-<script>
-    function checkAccess() {
-        const userId = document.getElementById('userId').value;
-        const resultDiv = document.getElementById('result');
-        
-        if (!userId) {
-            resultDiv.textContent = "Пожалуйста, введите ID вашего аккаунта на 1win";
-            return;
-        }
-
-        // Отправляем GET-запрос к серверу для получения данных из data.json
-        fetch('https://postback-server-boba.onrender.com/data')
-            .then(response => response.json())
-            .then(data => {
-                const userEntry = data.find(entry => entry.user_id === userId);
-
-                if (userEntry) {
-                    if (userEntry.amount > 5.00) {
-                        resultDiv.textContent = "Аккаунт найден!";
-                        resultDiv.style.color = "#00FF00";
-                        // Переход на страницу mines.html
-                        setTimeout(() => {
-                            window.location.href = "mines.html";
-                        }, 1000); // Задержка на 1 секунду перед переходом
-                    } else {
-                        resultDiv.textContent = "Аккаунт не активирован!";
-                        resultDiv.style.color = "#FF0000";
-                    }
-                } else {
-                    resultDiv.textContent = "Аккаунт не активирован!";
-                    resultDiv.style.color = "#FF0000";
-                }
-            })
-            .catch(error => {
-                console.error('Ошибка при получении данных:', error);
-                resultDiv.textContent = "Ошибка при загрузке данных";
-                resultDiv.style.color = "#FF0000";
-            });
-    }
-</script>
+<div class="glow-circle center"></div>
 
 </body>
 </html>

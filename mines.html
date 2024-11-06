@@ -6,29 +6,66 @@
     <title>Сигналы Mines</title>
     <style>
         body {
+            margin: 0;
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background: #01013c;
+            background: url('redsoftlogo.png') no-repeat center center;
+            background-size: cover;
+            font-family: Arial, sans-serif;
             overflow: hidden;
+            color: white;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,0,0,0.2), transparent 70%);
+        }
+
+        .circuit-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .glow-circle {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,69,0,0.8), rgba(0,0,0,0));
+            box-shadow: 0 0 20px 15px rgba(255,69,0,0.5);
+        }
+
+        .glow-circle.center {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .game-container {
             padding: 10px;
-            border: 3px solid rgba(173, 216, 230, 0.8); /* Тонкая светло-голубая граница */
-            border-radius: 20px; /* Более округлые углы */
+            border: 3px solid rgba(173, 216, 230, 0.8);
+            border-radius: 20px;
             background: rgba(0, 15, 45, 0.9);
             box-shadow: 
-                inset 0 0 15px rgba(0, 0, 0, 0.8), /* Внутренняя тень для темного эффекта */
-                0 0 20px rgba(0, 216, 230, 0.5), /* Внешнее свечение */
-                0 0 30px rgba(0, 216, 230, 0.3); /* Дополнительная светлая тень для глубины */
+                inset 0 0 15px rgba(0, 0, 0, 0.8),
+                0 0 20px rgba(0, 216, 230, 0.5),
+                0 0 30px rgba(0, 216, 230, 0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .grid {
@@ -42,8 +79,8 @@
         .square {
             width: 50px;
             height: 50px;
-            background: url('button.png') no-repeat center center; background-size: cover;
-            background-size: 250px 250px; /* Размер всего SVG-файла */
+            background: url('button.png') no-repeat center center;
+            background-size: 250px 250px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -71,9 +108,9 @@
             align-items: center;
             margin-top: 10px;
             padding: 10px 20px;
-            border-radius: 15px; /* Более округлые углы */
-            background: #1b1b2f; /* Темный фон для выбора режима */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Легкая тень для эффекта объема */
+            border-radius: 15px;
+            background: #1b1b2f;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             margin-bottom: 15px;
             color: #FFFFFF;
             font-size: 20px;
@@ -87,27 +124,27 @@
         }
 
         .mode-button {
-            width: 40px; 
-            height: 40px; 
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 10px;
-            background-color: #1b1b2f; /* Темный фон для кнопок */
-            color: #FFFFFF; /* Белый текст */
+            background-color: #1b1b2f;
+            color: #FFFFFF;
             border: none;
-            border-radius: 50%; /* Округлая форма для кнопок */
+            border-radius: 50%;
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: background 0.3s, transform 0.3s;
         }
 
         .mode-button:hover {
-            background-color: #343a40; /* Более светлый оттенок при наведении */
+            background-color: #343a40;
         }
 
         #modeValue {
-            color: #FFFFFF; /* Белый текст для значения режима */
+            color: #FFFFFF;
             font-weight: bold;
             font-size: 20px;
             margin: 0 10px;
@@ -117,17 +154,17 @@
             padding: 15px 40px;
             font-size: 20px;
             cursor: pointer;
-            background: #1976D2; /* Синий цвет кнопки */ /* Темный фон для кнопки */
+            background: #1976D2;
             border: none;
             border-radius: 10px;
-            color: #FFFFFF; /* Белый текст */
+            color: #FFFFFF;
             font-weight: bold;
             transition: background 0.3s, transform 0.3s;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Легкая тень */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         }
 
         button:hover {
-            background: #343a40; /* Более светлый оттенок при наведении */
+            background: #343a40;
             transform: scale(1.05);
         }
 
@@ -154,10 +191,10 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 150px; /* Высота изображения */
+            height: 150px;
             background: url('downbackground.png') no-repeat center bottom;
             background-size: cover;
-            z-index: -1; /* Чтобы изображение находилось поверх основного фона */
+            z-index: -1;
         }
 
         @media (max-width: 600px) {
@@ -170,28 +207,13 @@
                 width: 40px;
                 height: 40px;
                 font-size: 18px;
-                background-size: contain; /* Изменяем под мобильный размер */
+                background-size: contain;
             }
 
             .star {
                 width: 32px;
                 height: 32px;
             }
-        }
-            .molniya-left {
-            position: absolute;
-            left: 0;
-            bottom: 50%;
-            width: 50px; /* Размер молнии */
-            z-index: -1; /* Чтобы изображение находилось позади интерфейса */
-        }
-
-        .molniya-right {
-            position: absolute;
-            right: 0;
-            top: 10px;
-            width: 50px; /* Размер молнии */
-            z-index: -1; /* Чтобы изображение находилось позади интерфейса */
         }
     </style>
 </head>
@@ -203,9 +225,7 @@
 </div>
 
 <div class="game-container">
-    <div class="grid" id="grid">
-        
-    </div>
+    <div class="grid" id="grid"></div>
 </div>
 
 <div class="mode-selection">
@@ -233,13 +253,6 @@
     for (let i = 0; i < 25; i++) {
         const square = document.createElement('div');
         square.className = 'square';
-        
-        // Определение позиции для каждого квадрата
-        const row = Math.floor(i / 5);
-        const col = i % 5;
-        
-
-        
         grid.appendChild(square);
         squares.push(square);
     }
@@ -302,7 +315,5 @@
     });
 </script>
 
-    <img src="molniya.png" alt="molniya.png" class="molniya-left">
-    <img src="molniya2.png" alt="molniya2.png" class="molniya-right">
 </body>
 </html>

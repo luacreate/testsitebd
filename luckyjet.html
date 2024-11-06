@@ -17,6 +17,7 @@
             font-family: Arial, sans-serif;
             overflow: hidden;
             color: white;
+            transform: scale(0.9);
         }
 
         .overlay {
@@ -44,19 +45,19 @@
         }
 
         .logo {
-            width: 100px;
-            margin-bottom: 20px;
+            width: 80px;
+            margin-bottom: 15px;
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 28px;
             margin: 0;
             margin-bottom: 15px;
         }
 
         .button {
-            padding: 15px 40px;
-            font-size: 20px;
+            padding: 12px 35px;
+            font-size: 18px;
             cursor: pointer;
             background: #1976D2;
             border: none;
@@ -79,8 +80,8 @@
             justify-content: center;
             align-items: center;
             margin: 20px 0;
-            width: 150px;
-            height: 150px;
+            width: 130px;
+            height: 130px;
         }
 
         .multiplier-circle {
@@ -102,7 +103,7 @@
         }
 
         .multiplier {
-            font-size: 3.5em;
+            font-size: 3em;
             color: #00ffcc;
             text-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
             opacity: 0;
@@ -115,10 +116,39 @@
             transform: scale(1);
         }
 
+        .support {
+            position: fixed;
+            bottom: 20px;
+            color: white;
+            z-index: 1;
+            background: rgba(50, 50, 50, 0.8);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .support a {
+            color: #9d0fff;
+            text-decoration: none;
+        }
+
+        .support a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 600px) {
             .button {
-                padding: 10px 30px;
-                font-size: 18px;
+                padding: 10px 25px;
+                font-size: 16px;
+            }
+
+            .multiplier-container {
+                width: 100px;
+                height: 100px;
+            }
+
+            .multiplier {
+                font-size: 2.5em;
             }
         }
     </style>
@@ -128,7 +158,7 @@
 
     <div class="container" id="mainContainer">
         <img src="https://1winbd.com/wp-content/uploads/2022/10/lucky-jet-header.webp" alt="Логотип" class="logo" />
-        <h1 id="heading">Добро пожаловать в 1Win Access</h1>
+        <h1 id="heading">Red Soft Signals </h1>
         
         <div class="multiplier-container">
             <div class="multiplier-circle"></div>

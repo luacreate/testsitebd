@@ -53,6 +53,11 @@
             font-size: 18px;
             line-height: 1.6;
             margin-bottom: 20px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
         }
 
         a {
@@ -62,6 +67,13 @@
 
         a:hover {
             text-decoration: underline;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
         }
 
         button {
@@ -80,12 +92,6 @@
         button:hover {
             background: #a9a9a9;
             transform: scale(1.05);
-        }
-
-        .button-container {
-            margin-top: 20px;
-            width: 100%;
-            text-align: center;
         }
 
         @media (max-width: 600px) {
@@ -110,23 +116,58 @@
 
 <div class="container">
     <h1>Правильная регистрация аккаунта для нашего приложения ✅</h1>
-    <div class="content">
+    <div class="content active" id="page1">
         <p><strong>Viktor, October 21, 2024</strong></p>
         <p>1⃣ Перейти на сайт - <a href="#">(Жми)</a></p>
+    </div>
+    <div class="content" id="page2">
         <p>2⃣ При регистрации вводим промокод - <strong>GPT24</strong> (САМЫЙ ВАЖНЫЙ ПУНКТ). Если аккаунт будет зарегистрирован не по этому промокоду - бот не сможет подключиться к нему.</p>
+    </div>
+    <div class="content" id="page3">
         <p>3⃣ Активируем аккаунт. Для активации аккаунта необходимо совершить 2 пополнения баланса на сумму 2001 руб. (Один депозит 1001 рублей и второй депозит 1000).<br>
         <strong>ВАЖНО:</strong> Если вы совершите один депозит на сумму 2001 рубль, программа может не увидеть ваше пополнение, поэтому лучше 2 раза.</p>
+    </div>
+    <div class="content" id="page4">
         <p>4⃣ Играем в Lucky Jet, чтобы программа смогла синхронизироваться с вашим аккаунтом и начать выдавать точные сигналы. <br>
         <em>(Рекомендуется сыграть 15-20 игр по 20 рублей, тогда программа сможет хорошо проанализировать результаты и выдавать точные сигналы).</em></p>
+    </div>
+    <div class="content" id="page5">
         <p>5⃣ Получаем ваш ID на сайте 1WIN и используем его для авторизации в программе.</p>
         <p><strong>ВАЖНО:</strong> При несоблюдении пунктов 1, 2, 3 - бот не сможет подключиться к вашему аккаунту. <br>
         При несоблюдении пункта 4 - бот может выдавать неверные сигналы из-за отсутствия синхронизации с аккаунтом.</p>
         <p>⚠️ По всем вопросам писать менеджеру - <a href="https://t.me/adm_1w" target="_blank">https://t.me/adm_1w</a></p>
     </div>
-    <div class="button-container">
-        <button onclick="window.location.href='index.html'">Назад</button>
+    <div class="navigation-buttons">
+        <button onclick="prevPage()">Назад</button>
+        <button onclick="nextPage()">Вперед</button>
     </div>
 </div>
+
+<script>
+    let currentPage = 1;
+    const totalPages = 5;
+
+    function showPage(page) {
+        for (let i = 1; i <= totalPages; i++) {
+            document.getElementById(`page${i}`).classList.remove('active');
+        }
+        document.getElementById(`page${page}`).classList.add('active');
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            showPage(currentPage);
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            showPage(currentPage);
+        }
+    }
+</script>
 
 </body>
 </html>

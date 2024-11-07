@@ -137,9 +137,8 @@
         <p>⚠️ По всем вопросам писать менеджеру - <a href="https://t.me/adm_1w" target="_blank">https://t.me/adm_1w</a></p>
     </div>
     <div class="navigation-buttons">
-        <button onclick="goBack()">Назад</button>
-        <button onclick="prevPage()">Назад</button>
-        <button onclick="nextPage()">Вперед</button>
+        <button id="backButton" onclick="goBack()">Назад</button>
+        <button id="nextButton" onclick="nextPage()">Вперед</button>
     </div>
 </div>
 
@@ -152,6 +151,15 @@
             document.getElementById(`page${i}`).classList.remove('active');
         }
         document.getElementById(`page${page}`).classList.add('active');
+        
+        const backButton = document.getElementById('backButton');
+        if (page === 1) {
+            backButton.textContent = 'Назад в меню';
+            backButton.onclick = () => window.location.href = 'index.html';
+        } else {
+            backButton.textContent = 'Назад';
+            backButton.onclick = prevPage;
+        }
     }
 
     function nextPage() {
@@ -169,9 +177,5 @@
     }
 
     function goBack() {
-        window.location.href = 'index.html';
-    }
-</script>
-
-</body>
-</html>
+        if (currentPage === 1) {
+            window.location.href = 'in

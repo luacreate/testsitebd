@@ -162,10 +162,18 @@
                     } else {
                         resultDiv.textContent = "Аккаунт не активирован!";
                         resultDiv.style.color = "#FF0000";
+                        // Переход на страницу instruction.html
+                        setTimeout(() => {
+                            window.location.href = "instruction.html";
+                        }, 1000); // Задержка на 1 секунду перед переходом
                     }
                 } else {
                     resultDiv.textContent = "Аккаунт не активирован!";
                     resultDiv.style.color = "#FF0000";
+                    // Переход на страницу instruction.html
+                    setTimeout(() => {
+                        window.location.href = "instruction.html";
+                    }, 1000); // Задержка на 1 секунду перед переходом
                 }
             })
             .catch(error => {

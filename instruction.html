@@ -117,7 +117,7 @@
 <div class="container">
     <h1>Правильная регистрация аккаунта для нашего приложения ✅</h1>
     <div class="content active" id="page1">
-                <p>1. Перейти на сайт - <a href="https://1wbhk.com/casino/list?open=register&p=24h6">Жми</a></p>
+        <p>1. Перейти на сайт - <a href="https://1wbhk.com/casino/list?open=register&p=24h6">Жми</a></p>
     </div>
     <div class="content" id="page2">
         <p>2. При регистрации вводим промокод - <strong>GPT24</strong> (САМЫЙ ВАЖНЫЙ ПУНКТ). Если аккаунт будет зарегистрирован не по этому промокоду - бот не сможет подключиться к нему.</p>
@@ -137,7 +137,7 @@
         <p>⚠️ По всем вопросам писать менеджеру - <a href="https://t.me/adm_1w" target="_blank">https://t.me/adm_1w</a></p>
     </div>
     <div class="navigation-buttons">
-        <button id="backButton" onclick="goBack()">Назад</button>
+        <button id="backButton" onclick="goBack()">Назад в меню</button>
         <button id="nextButton" onclick="nextPage()">Вперед</button>
     </div>
 </div>
@@ -178,4 +178,12 @@
 
     function goBack() {
         if (currentPage === 1) {
-            window.location.href = 'in
+            window.location.href = 'index.html';
+        } else {
+            prevPage();
+        }
+    }
+</script>
+
+</body>
+</html>

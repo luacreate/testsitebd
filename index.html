@@ -126,6 +126,7 @@
     </div>
     <div class="button-container">
         <button onclick="sendMessage('Что ты умеешь?')">Что ты умеешь?</button>
+        <button onclick="getSignal()">Получить сигнал</button>
     </div>
 
     <script>
@@ -181,6 +182,38 @@
                 default:
                     return 'Извините, я не понял вопрос.';
             }
+        }
+    
+        function getSignal() {
+            const chatWindow = document.getElementById("chatWindow");
+            
+            // Добавляем анимацию "Идёт анализ..."
+            const analyzingMessage = document.createElement("div");
+            analyzingMessage.className = "bot-typing";
+            analyzingMessage.textContent = "Идёт анализ...";
+            chatWindow.appendChild(analyzingMessage);
+
+            // Прокрутка чата вниз
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+
+            // Через 2 секунды заменяем на "Сопоставляю паттерны результатов"
+            setTimeout(() => {
+                analyzingMessage.textContent = "Сопоставляю паттерны результатов...";
+
+                // Через 2 секунды заменяем на результат
+                setTimeout(() => {
+                    chatWindow.removeChild(analyzingMessage);
+
+                    const resultMessage = document.createElement("div");
+                    resultMessage.className = "bot-response";
+                    const randomMultiplier = (Math.random() * (9.99 - 1.00) + 1.00).toFixed(2);
+                    resultMessage.textContent = `Ваш прогноз: x${randomMultiplier}`;
+                    chatWindow.appendChild(resultMessage);
+
+                    // Прокрутка чата вниз
+                    chatWindow.scrollTop = chatWindow.scrollHeight;
+                }, 2000);
+            }, 2000);
         }
     </script>
 </body>

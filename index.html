@@ -88,20 +88,22 @@
 
         button {
             margin: 10px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #283e51, #4b79a1);
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
             color: white;
             border: none;
-            border-radius: 25px;
+            border-radius: 50px;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
             font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
 
         button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            transform: translateY(-10px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
         }
 
         @keyframes fadeIn {
@@ -114,7 +116,24 @@
             20% { opacity: 1; }
             100% { opacity: 0.2; }
         }
-    </style>
+            .golden-button {
+            background: linear-gradient(135deg, #ffd700, #ffb700);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .golden-button:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.8);
+        }
+</style>
 </head>
 <body>
     <div class="chat-window" id="chatWindow">
@@ -126,7 +145,7 @@
     </div>
     <div class="button-container">
         <button onclick="sendMessage('Что ты умеешь?')">Что ты умеешь?</button>
-        <button onclick="getSignal()">Получить сигнал</button>
+        <button onclick="getSignal()" class="golden-button">Получить сигнал</button>
     </div>
 
     <script>

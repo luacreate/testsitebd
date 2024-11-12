@@ -1,239 +1,83 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Имитация ChatGPT</title>
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .logo {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo img {
-            width: 50px;
-            height: 50px;
-            margin-right: 10px;
-        }
-
-        .logo-text {
-            font-size: 28px;
-            font-weight: bold;
-            color: white;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
-        }
-
-        .chat-window {
-            width: 90%;
-            max-width: 400px;
-            height: 70%;
-            max-height: 550px;
-            background: linear-gradient(135deg, #121212, #2e2e2e);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-            overflow-y: auto;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .user-message, .bot-response {
-            max-width: 75%;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 20px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
-            animation: fadeIn 0.5s ease;
-        }
-
-        .user-message {
-            align-self: flex-end;
-            background: linear-gradient(135deg, #4b79a1, #283e51);
-            color: white;
-        }
-
-        .bot-response {
-            align-self: flex-start;
-            background: linear-gradient(135deg, #3a3a3a, #5a5a5a);
-            color: #e0e0e0;
-        }
-
-        .bot-typing {
-            align-self: flex-start;
-            color: #aaa;
-            font-style: italic;
-            animation: blink 1s steps(5, start) infinite;
-        }
-
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 15px;
-        }
-
-        button {
-            margin: 10px;
-            padding: 15px 25px;
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        button:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes blink {
-            0% { opacity: 0.2; }
-            20% { opacity: 1; }
-            100% { opacity: 0.2; }
-        }
-            .golden-button {
-            background: linear-gradient(135deg, #ffd700, #ffb700);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        .golden-button:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.8);
-        }
+<meta charset="UTF-8">
+<title>Choose Language</title>
+<style>
+    @font-face {
+        font-family: 'Intro';
+        src: url('intro.otf') format('opentype');
+    }
+    body {
+        font-family: 'Intro', sans-serif;
+        background-image: url('fon.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
+    .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .button {
+        background-color: orange;
+        border: none;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 32px;
+        margin: 4px 15px;
+        cursor: pointer;
+        width: 200px;
+        height: 100px;
+        transition: all 0.3s ease;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+    .button:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -75px;
+        width: 300%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.2);
+        transform: skewX(-30deg);
+        transition: left 0.7s ease;
+    }
+    .button:hover:before {
+        left: 100%;
+    }
+    .button:hover {
+        background-color: #e69500;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        transform: translateY(-2px);
+    }
+    h1 {
+        color: white;
+        margin-bottom: 40px;
+        font-size: 64px;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
 </style>
 </head>
 <body>
-    <div class="chat-window" id="chatWindow">
-        <div class="logo">
-            <img src="openai.png" alt="OpenAI Logo">
-            <div class="logo-text">OpenAI</div>
-        </div>
-        <!-- Окно для чата -->
+    <h1>Choose Language</h1>
+    <div class="buttons">
+        <a href="rus.html" class="button">RUS</a>
+        <a href="en.html" class="button">ENG</a>
     </div>
-    <div class="button-container">
-        <button onclick="sendMessage('Что ты умеешь?')">Что ты умеешь?</button>
-        <button onclick="getSignal()" class="golden-button">Получить сигнал</button>
-    </div>
-
-    <script>
-        function sendMessage(question) {
-            const chatWindow = document.getElementById("chatWindow");
-            
-            // Добавляем сообщение пользователя в чат
-            const userMessage = document.createElement("div");
-            userMessage.className = "user-message";
-            userMessage.textContent = question;
-            chatWindow.appendChild(userMessage);
-
-            // Добавляем анимацию "бот печатает..."
-            const botTyping = document.createElement("div");
-            botTyping.className = "bot-typing";
-            botTyping.textContent = "Печатает...";
-            chatWindow.appendChild(botTyping);
-
-            // Прокрутка чата вниз
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-
-            // Через 2 секунды заменяем анимацию на ответ с печатью по букве
-            setTimeout(() => {
-                chatWindow.removeChild(botTyping);
-
-                const botResponse = document.createElement("div");
-                botResponse.className = "bot-response";
-                chatWindow.appendChild(botResponse);
-
-                const responseText = getBotResponse(question);
-                let index = 0;
-
-                function typeLetter() {
-                    if (index < responseText.length) {
-                        botResponse.textContent += responseText.charAt(index);
-                        index++;
-                        setTimeout(typeLetter, 30);
-                    }
-                }
-
-                typeLetter();
-
-                // Прокрутка чата вниз
-                chatWindow.scrollTop = chatWindow.scrollHeight;
-            }, 2000);
-        }
-
-        function getBotResponse(question) {
-            // Возвращаем заготовленный ответ в зависимости от вопроса
-            switch (question) {
-                case 'Что ты умеешь?':
-                    return 'Я - симбиоз нейросетей и алгоритмов вычисления, задача которых анализировать исходы игр Lucky Jet и выдавать точные прогнозы на исход раундов!';
-                default:
-                    return 'Извините, я не понял вопрос.';
-            }
-        }
-    
-        function getSignal() {
-            const chatWindow = document.getElementById("chatWindow");
-            
-            // Добавляем анимацию "Идёт анализ..."
-            const analyzingMessage = document.createElement("div");
-            analyzingMessage.className = "bot-typing";
-            analyzingMessage.textContent = "Идёт анализ...";
-            chatWindow.appendChild(analyzingMessage);
-
-            // Прокрутка чата вниз
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-
-            // Через 2 секунды заменяем на "Сопоставляю паттерны результатов"
-            setTimeout(() => {
-                analyzingMessage.textContent = "Сопоставляю паттерны результатов...";
-
-                // Через 2 секунды заменяем на результат
-                setTimeout(() => {
-                    chatWindow.removeChild(analyzingMessage);
-
-                    const resultMessage = document.createElement("div");
-                    resultMessage.className = "bot-response";
-                    const randomMultiplier = (Math.random() * (9.99 - 1.00) + 1.00).toFixed(2);
-                    resultMessage.textContent = `Ваш прогноз: x${randomMultiplier}`;
-                    chatWindow.appendChild(resultMessage);
-
-                    // Прокрутка чата вниз
-                    chatWindow.scrollTop = chatWindow.scrollHeight;
-                }, 2000);
-            }, 2000);
-        }
-    </script>
 </body>
 </html>
